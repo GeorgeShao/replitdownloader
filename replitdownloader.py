@@ -43,16 +43,17 @@ def open_assignment(i: int):
         print(f'Opened assignment #{i}')
     except:
         time.sleep(1)
-        open_assignment()
+        open_assignment(i)
 
 def get_text(i: int):
     try:
         text_element = driver.find_element_by_xpath('//*[@id="root"]/div/div[3]/div[2]/section[1]/div/section[1]/div[3]/div/div[1]/div[2]')
         text = text_element.text
+        print(text)
         print(f'Got text #{i}')
     except:
         time.sleep(1)
-        get_text()
+        get_text(i)
 
 for i in range(1, num_assigments+1):
     open_assignment(i)
