@@ -10,22 +10,28 @@ except:
     sys.exit()
 
 classroom_id = input("Enter your classroom id (6 digit number): ")
-num_assigments = input("Please enter the number of assignments: ")
+num_assigments = int(input("Please enter the number of assignments: "))
 
 driver = webdriver.Chrome()
-driver.get(f'https://repl.it/login?goto=%2Fstudent%2Fclassrooms%2F{classroom_id}'')
+driver.get(f'https://repl.it/login?goto=%2Fstudent%2Fclassrooms%2F{classroom_id}')
 
 print("Please login to repl.it through the popup window")
 
 while True:
-    if driver.current_url == f'https://repl.it/student/classrooms/{classroom_id}'':
+    if driver.current_url == f'https://repl.it/student/classrooms/{classroom_id}':
         print("Successfully logged in!")
         break
 
 print("Webpage is loading...")
 
-loaded_status = input("Type anything here once the webpage has finished loading: ")
+loaded_status = input(f'Press enter once the webpage has finished loading (Assignment #1):')
 
 for i in range(1, num_assigments+1):
-    element = driver.find_element_by_xpath(f'//*[@id="classroomsPage"]/div[3]/div[3]/div/div[2]/div/div[2]/div[{i}]')
-    element.click()
+    assignment_element = driver.find_element_by_xpath(f'//*[@id="classroomsPage"]/div[3]/div[3]/div/div[2]/div/div[2]/div[{i}]')
+    assignment_element.click()
+    loaded_status = input(f'Press enter once the webpage has finished loading (Assignment #{i}): ')
+    text_element = driver.find_element_by_xpath('//*[@id="root"]/div/div[3]/div[2]/section[1]/div/section[1]/div[3]/div/div[1]/div[2]')
+    text = text_element.text
+    print(text)
+    driver.get(f'https://repl.it/login?goto=%2Fstudent%2Fclassrooms%2F{classroom_id}')
+    loaded_status = input(f'Press enter once the webpage has finished loading (Assignment #{i+1}): ')
